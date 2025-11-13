@@ -132,7 +132,7 @@
 
         .progress-bar {
             height: 10px;
-            background: #e8f0e8;
+            background: #ffffff;
             border-radius: 10px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -420,9 +420,9 @@
             document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
 
             var optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '<button class="option-btn" onclick="selectOption(0)">A. ' + q.a + '</button>' +
-                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b + '</button>' +
-                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c + '</button>';
+            optionsContainer.innerHTML = '<button class="option-btn" onclick="selectOption(0)">A. ' + q.a '</button>' +
+                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b'</button>' +
+                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c'</button>';
 
             if (answers[currentQuestion] !== undefined) {
                 optionsContainer.children[answers[currentQuestion]].classList.add('selected');
