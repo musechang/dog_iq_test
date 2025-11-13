@@ -421,8 +421,8 @@
 
             var optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '<button class="option-btn" onclick="selectOption(0)">A. ' + q.a '</button>' +
-                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b'</button>' +
-                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c'</button>';
+                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b '</button>' +
+                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c '</button>';
 
             if (answers[currentQuestion] !== undefined) {
                 optionsContainer.children[answers[currentQuestion]].classList.add('selected');
