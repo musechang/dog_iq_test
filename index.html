@@ -132,7 +132,7 @@
 
         .progress-bar {
             height: 10px;
-            background: #ffffff;
+            background: #e8f0e8;
             border-radius: 10px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -391,9 +391,9 @@
         var levels = [
             { min: 30, max: 60, icon: '🌼', title: '小可愛探索家', desc: '對世界充滿好奇但行動派不強，常用「萌樣」解決問題。可能還需要一點時間理解指令，但牠的耐心與親和力絕對滿分。', msgs: ['用無辜大眼證明：可愛就是最強武器！💕', '的人生哲學：為什麼要努力？躺著等摸摸不好嗎？😌'] },
             { min: 61, max: 90, icon: '🐕', title: '開朗學習生', desc: '觀察力與反應力不錯，偶爾會分心，但只要願意學就進步很快。懂得用眼神讀空氣，是人類情緒的好感應器。', msgs: ['正在用心感受你的每個情緒變化 💙', '學習速度快，就是偶爾會被零食分心而已 😋'] },
-            { min: 81, max: 110, icon: '🧠', title: '機靈夥伴型', desc: '思考靈活、能舉一反三，懂得觀察情境並做出對應行動。學新指令速度快，也知道什麼時候該「裝傻」討摸摸。', msgs: ['的測驗結果是 💡 機靈夥伴型！已經學會什麼時候該裝傻了 😏', '在思考怎麼用最少力氣獲得最多零食 🧠✨'] },
-            { min: 91, max: 125, icon: '🚀', title: '聰明高材生', desc: '不只會學，還會觀察你、測試你。能自己找解法、理解因果，是小小問題解決高手。可能會「太聰明」到讓飼主啞口無言。', msgs: ['已經開始觀察你的行為模式了 🔍', '可能正在測試你的底線在哪裡 🤓'] },
-            { min: 110, max: 135, icon: '🌟', title: '狗界天才王', desc: '超高理解力與學習速度，懂得觀察人類表情、預測行動。能自己設計遊戲或策略，是真正能「跟人溝通」的狗狗天才！', msgs: ['的智商可能比主人還高…該擔心嗎？👑🤔', '，傳說中的 🌟 狗界天才王！可能已經在策劃統治世界了 🌍'] }
+            { min: 91, max: 110, icon: '🧠', title: '機靈夥伴型', desc: '思考靈活、能舉一反三，懂得觀察情境並做出對應行動。學新指令速度快，也知道什麼時候該「裝傻」討摸摸。', msgs: ['的測驗結果是 💡 機靈夥伴型！已經學會什麼時候該裝傻了 😏', '在思考怎麼用最少力氣獲得最多零食 🧠✨'] },
+            { min: 111, max: 125, icon: '🚀', title: '聰明高材生', desc: '不只會學，還會觀察你、測試你。能自己找解法、理解因果，是小小問題解決高手。可能會「太聰明」到讓飼主啞口無言。', msgs: ['已經開始觀察你的行為模式了 🔍', '可能正在測試你的底線在哪裡 🤓'] },
+            { min: 126, max: 135, icon: '🌟', title: '狗界天才王', desc: '超高理解力與學習速度，懂得觀察人類表情、預測行動。能自己設計遊戲或策略，是真正能「跟人溝通」的狗狗天才！', msgs: ['的智商可能比主人還高…該擔心嗎？👑🤔', '，傳說中的 🌟 狗界天才王！可能已經在策劃統治世界了 🌍'] }
         ];
 
         var currentQuestion = 0;
@@ -420,9 +420,9 @@
             document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
 
             var optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '<button class="option-btn" onclick="selectOption(0)">A. ' + q.a '</button>' +
-                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b '</button>' +
-                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c '</button>';
+            optionsContainer.innerHTML = '<button class="option-btn" onclick="selectOption(0)">A. ' + q.a + '（3分）</button>' +
+                '<button class="option-btn" onclick="selectOption(1)">B. ' + q.b + '（2分）</button>' +
+                '<button class="option-btn" onclick="selectOption(2)">C. ' + q.c + '（1分）</button>';
 
             if (answers[currentQuestion] !== undefined) {
                 optionsContainer.children[answers[currentQuestion]].classList.add('selected');
