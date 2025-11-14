@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>狗狗智力測驗</title>
+    <title>🧠 狗狗智力測驗</title>
     <style>
         * {
             margin: 0;
@@ -421,7 +421,17 @@
     <div class="container">
         <div id="welcome" class="screen active">
             <div class="logo">
-                <img src="logo.png" class="logo-icon">
+                <svg class="logo-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="70" cy="85" r="38" fill="#ff8c42"/>
+                    <circle cx="70" cy="85" r="38" fill="none" stroke="#000" stroke-width="10"/>
+                    <circle cx="130" cy="85" r="38" fill="#ff8c42"/>
+                    <circle cx="130" cy="85" r="38" fill="none" stroke="#000" stroke-width="10"/>
+                    <text x="70" y="98" font-size="50" text-anchor="middle" fill="#000" font-weight="bold" font-family="Arial">✱</text>
+                    <text x="130" y="98" font-size="50" text-anchor="middle" fill="#000" font-weight="bold" font-family="Arial">✱</text>
+                    <path d="M 100 130 L 88 148 L 112 148 Z" fill="#000"/>
+                    <path d="M 70 155 Q 80 175 95 170" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
+                    <path d="M 130 155 Q 120 175 105 170" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
+                </svg>
             </div>
             <h1 id="title">狗狗智力測驗</h1>
             <p class="subtitle" id="subtitle">12 道題目，揭開你家毛孩的天才指數！</p>
@@ -1020,23 +1030,23 @@
                         ctx.arc(600, 280, 100, 0, Math.PI * 2);
                         ctx.stroke();
                         
-                        drawCertificateText(ctx, certLang, t);
+                        drawCertificateText(ctx, t, certLang);
                     } catch (e) {
                         console.error('Error drawing photo:', e);
-                        drawCertificateText(ctx, certLang, t);
+                        drawCertificateText(ctx, t, certLang);
                     }
                 };
                 img.onerror = function() {
                     console.error('Failed to load image');
-                    drawCertificateText(ctx, certLang, t);
+                    drawCertificateText(ctx, t, certLang);
                 };
                 img.src = dogPhotoData;
             } else {
-                drawCertificateText(ctx, certLang, t);
+                drawCertificateText(ctx, t, certLang);
             }
         }
 
-        function drawCertificateText(ctx, certLang, t) {
+        function drawCertificateText(ctx, t, certLang) {
             ctx.fillStyle = '#ff8c42';
             ctx.font = 'bold 45px Arial';
             ctx.textAlign = 'center';
