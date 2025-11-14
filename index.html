@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>狗狗智力測驗</title>
+    <title>🧠 狗狗智力測驗</title>
     <style>
         * {
             margin: 0;
@@ -19,6 +19,43 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #ff8c42;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .lang-btn:hover {
+            background: #fff8f2;
+            color: #ff8c42;
+        }
+
+        .lang-btn.active {
+            background: #ff8c42;
+            color: white;
+            font-weight: 600;
         }
 
         .container {
@@ -112,8 +149,8 @@
         }
 
         .photo-preview {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             margin: 15px auto;
             border-radius: 50%;
             overflow: hidden;
@@ -123,12 +160,19 @@
             align-items: center;
             justify-content: center;
             color: #999;
+            font-size: 14px;
         }
 
         .photo-preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .photo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .btn {
@@ -249,37 +293,47 @@
             box-shadow: 0 10px 20px rgba(255, 140, 66, 0.3);
         }
 
-        .result-icon {
+        .result-header {
             text-align: center;
-            font-size: 100px;
-            margin: 30px 0;
-            animation: bounce 1s ease-in-out;
+            margin-bottom: 20px;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .result-dog-photo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ff8c42;
         }
 
-        .result-content {
-            background: linear-gradient(135deg, #fff3e6 0%, #ffe4c4 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 3px solid #ff8c42;
+        .result-dog-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .result-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .result-icon {
+            font-size: 60px;
         }
 
         .result-title {
-            text-align: center;
             font-size: 2em;
             color: #ff8c42;
-            margin-bottom: 15px;
             font-weight: bold;
         }
 
         .result-score {
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.5em;
             color: #2c3e2c;
             margin-bottom: 20px;
             font-weight: bold;
@@ -290,7 +344,8 @@
             font-size: 1.1em;
             color: #2c3e2c;
             margin-bottom: 20px;
-            font-weight: 500;
+            padding: 0 20px;
+            line-height: 1.6;
         }
 
         .result-description {
@@ -300,6 +355,15 @@
             color: #2c3e2c;
             line-height: 1.8;
             border: 3px solid #b8d4b8;
+            margin-bottom: 20px;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         .share-buttons {
@@ -329,33 +393,64 @@
                 width: 100px;
                 height: 100px;
             }
+
+            .photo-buttons {
+                flex-direction: column;
+            }
+
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+
+            .lang-btn {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="switchLanguage('zh')">中文</button>
+        <button class="lang-btn" onclick="switchLanguage('en')">English</button>
+        <button class="lang-btn" onclick="switchLanguage('nl')">Nederlands</button>
+    </div>
+
     <div class="container">
         <div id="welcome" class="screen active">
             <div class="logo">
-                <img src="logo.png" class="logo-icon">
+                <svg class="logo-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="70" cy="85" r="38" fill="#ff8c42"/>
+                    <circle cx="70" cy="85" r="38" fill="none" stroke="#000" stroke-width="10"/>
+                    <circle cx="130" cy="85" r="38" fill="#ff8c42"/>
+                    <circle cx="130" cy="85" r="38" fill="none" stroke="#000" stroke-width="10"/>
+                    <text x="70" y="98" font-size="50" text-anchor="middle" fill="#000" font-weight="bold" font-family="Arial">✱</text>
+                    <text x="130" y="98" font-size="50" text-anchor="middle" fill="#000" font-weight="bold" font-family="Arial">✱</text>
+                    <path d="M 100 130 L 88 148 L 112 148 Z" fill="#000"/>
+                    <path d="M 70 155 Q 80 175 95 170" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
+                    <path d="M 130 155 Q 120 175 105 170" stroke="#000" stroke-width="12" fill="none" stroke-linecap="round"/>
+                </svg>
             </div>
-            <h1>狗狗智力測驗</h1>
-            <p class="subtitle">30 道題目，揭開你家毛孩的天才指數！</p>
+            <h1 id="title">🧠 狗狗智力測驗</h1>
+            <p class="subtitle" id="subtitle">12 道題目，揭開你家毛孩的天才指數！</p>
             
             <div class="input-group">
-                <label for="dogName">請輸入你家狗狗的名字：</label>
+                <label for="dogName" id="nameLabel">請輸入你家狗狗的名字：</label>
                 <input type="text" id="dogName" placeholder="例如：Chewy、初一" required>
             </div>
             
-            <button class="btn" onclick="startTest()">開始測驗 🐾</button>
+            <button class="btn" onclick="startTest()" id="startBtn">開始測驗 🐾</button>
         </div>
 
         <div id="quiz" class="screen">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <p class="progress-text" id="progressText">第 1 題，共 30 題</p>
+            <p class="progress-text" id="progressText">第 1 題，共 12 題</p>
             
-            <span class="category-badge" id="categoryBadge">🐾 生活應對與情境理解</span>
+            <span class="category-badge" id="categoryBadge"></span>
             
             <div class="question" id="questionText"></div>
             
@@ -367,193 +462,349 @@
             </div>
         </div>
 
-        <div id="result" class="screen">
-            <div class="result-icon" id="resultIcon"></div>
+        <div id="photo" class="screen">
+            <h1 style="text-align: center; color: #2c3e2c; margin-bottom: 10px;" id="photoTitle">📸 上傳狗狗照片</h1>
+            <p class="subtitle" id="photoSubtitle">讓證書更有紀念價值！</p>
             
-            <div class="result-content">
-                <h2 class="result-title" id="resultTitle"></h2>
+            <div class="photo-upload">
+                <div class="photo-preview" id="photoPreviewStep">📷</div>
+                <input type="file" id="dogPhotoCamera" accept="image/*" capture="environment" onchange="previewPhoto('camera')">
+                <input type="file" id="dogPhotoGallery" accept="image/*" onchange="previewPhoto('gallery')">
+                
+                <div class="photo-buttons">
+                    <button class="btn" onclick="document.getElementById('dogPhotoCamera').click()" id="takePhotoBtn">📷 拍照</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('dogPhotoGallery').click()" id="choosePhotoBtn">🖼️ 從相簿選擇</button>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showResult()" style="margin-top: 20px;" id="viewResultBtn">查看結果 ✨</button>
+            <button class="btn btn-secondary" onclick="skipPhoto()" style="margin-top: 10px;" id="skipBtn">跳過</button>
+        </div>
+
+        <div id="result" class="screen">
+            <div class="result-header">
+                <div class="result-dog-photo" id="resultDogPhoto" style="display:none;">
+                    <img id="resultDogPhotoImg" src="" alt="狗狗照片">
+                </div>
+                
+                <div class="result-title-row">
+                    <span class="result-icon" id="resultIcon"></span>
+                    <h2 class="result-title" id="resultTitle"></h2>
+                </div>
+                
                 <p class="result-score" id="resultScore"></p>
                 <p class="result-message" id="resultMessage"></p>
-                <div class="result-description" id="resultDescription"></div>
             </div>
 
-            <div class="photo-upload">
-                <label style="font-weight: 600; color: #2c3e2c; margin-bottom: 10px; display: block;">上傳狗狗照片（證書用）：</label>
-                <div class="photo-preview" id="photoPreview">📷 點擊上傳照片</div>
-                <input type="file" id="dogPhoto" accept="image/*" capture="environment" onchange="previewPhoto()">
-                <button class="btn btn-secondary" onclick="document.getElementById('dogPhoto').click()" style="margin-bottom: 15px;">選擇照片</button>
-            </div>
+            <div class="result-description" id="resultDescription"></div>
+            
+            <p class="disclaimer" id="disclaimer">* 本測驗僅供娛樂參考，不代表真實的狗狗智商評估</p>
             
             <div class="share-buttons">
-                <button class="btn" onclick="downloadCertificate()">下載智力證明 📜</button>
-                <button class="btn btn-secondary" onclick="restartTest()">重新測驗 🔄</button>
+                <button class="btn" onclick="downloadCertificate()" id="downloadBtn">下載智力證明 📜</button>
+                <button class="btn btn-secondary" onclick="restartTest()" id="restartBtn">重新測驗 🔄</button>
             </div>
         </div>
     </div>
 
-    <canvas id="certificateCanvas" width="1200" height="800"></canvas>
+    <canvas id="certificateCanvas" width="1200" height="900"></canvas>
 
     <script>
-        var questions = [
-            { category: '🐾 生活應對與情境理解', q: '當你正在幫你的小狗準備正餐時，小狗有沒有理解並且做出反應呢？', options: [
-                { text: '直接衝到廚房等待', score: 4 },
-                { text: '有感應到有事情要發生了', score: 3 },
-                { text: '沒有反應', score: 1 }
-            ]},
-            { category: '🐾 生活應對與情境理解', q: '當你收拾背包準備出門旅行，牠會？', options: [
-                { text: '早早察覺，開始跟著你', score: 4 },
-                { text: '到最後才發現', score: 3 },
-                { text: '完全不知道', score: 1 }
-            ]},
-            { category: '🐾 生活應對與情境理解', q: '若你用手機錄下牠的叫聲播放，牠會？', options: [
-                { text: '馬上四處找「自己」', score: 4 },
-                { text: '抬頭聽一下', score: 3 },
-                { text: '沒反應', score: 1 }
-            ]},
-            { category: '🐾 生活應對與情境理解', q: '當牠聽到你說「要去散步嗎？」時？', options: [
-                { text: '秒衝到門邊', score: 4 },
-                { text: '先觀察你是不是認真的', score: 3 },
-                { text: '沒特別反應', score: 1 }
-            ]},
-            { category: '🐾 生活應對與情境理解', q: '小狗對不同食物有沒有不同程度的愛好？', options: [
-                { text: '對於某些食物很瘋狂', score: 4 },
-                { text: '分得出差別沒有特別喜好', score: 3 },
-                { text: '分不出來差別', score: 1 }
-            ]},
-            { category: '🦴 問題解決力', q: '你把零食放在透明盒子裡，狗狗怎麼辦？', options: [
-                { text: '用爪子或鼻子試著打開', score: 4 },
-                { text: '看著你求救', score: 3 },
-                { text: '馬上放棄', score: 1 }
-            ]},
-            { category: '🦴 問題解決力', q: '當牠的玩具卡在沙發下時？', options: [
-                { text: '用爪子或鼻子撥出來', score: 4 },
-                { text: '對著沙發叫', score: 3 },
-                { text: '轉頭去玩別的', score: 1 }
-            ]},
-            { category: '🦴 問題解決力', q: '你用紙箱擋住牠的路，牠會？', options: [
-                { text: '找另一邊繞過去', score: 4 },
-                { text: '嘗試撞開', score: 3 },
-                { text: '就站在原地', score: 1 }
-            ]},
-            { category: '🦴 問題解決力', q: '當你換掉原本放零食的罐子，牠是否能馬上找到新罐子？', options: [
-                { text: '馬上找到', score: 4 },
-                { text: '聞聞看幾次才知道', score: 3 },
-                { text: '完全找不到', score: 1 }
-            ]},
-            { category: '🦴 問題解決力', q: '小狗會不會在夏天運動後口渴時自動去喝水？', options: [
-                { text: '會自己渴了就去喝', score: 4 },
-                { text: '偶爾會自己來跟我要水', score: 3 },
-                { text: '都要我拿水給他喝', score: 1 }
-            ]},
-            { category: '🐶 社交理解力', q: '當你假裝哭時，狗狗會？', options: [
-                { text: '立刻靠過來安撫你', score: 4 },
-                { text: '觀察幾秒才反應', score: 3 },
-                { text: '一臉困惑', score: 1 }
-            ]},
-            { category: '🐶 社交理解力', q: '當陌生人呼喚牠名字時，牠反應？', options: [
-                { text: '看你確認再決定', score: 4 },
-                { text: '猶豫一下', score: 3 },
-                { text: '立刻跑過去', score: 1 }
-            ]},
-            { category: '🐶 社交理解力', q: '當你指著某個東西說「看那邊！」，牠會？', options: [
-                { text: '跟著你指的方向看', score: 4 },
-                { text: '看你的手指', score: 3 },
-                { text: '完全不懂', score: 1 }
-            ]},
-            { category: '🐶 社交理解力', q: '當你突然改變路線走別的方向，牠會？', options: [
-                { text: '立刻跟上', score: 4 },
-                { text: '過幾秒才發現', score: 3 },
-                { text: '還在原路等你', score: 1 }
-            ]},
-            { category: '🐶 社交理解力', q: '當家中其他人叫牠名字時，牠是否分辨出誰在叫？', options: [
-                { text: '會', score: 4 },
-                { text: '偶爾會搞混', score: 3 },
-                { text: '都要看一眼才知道', score: 1 }
-            ]},
-            { category: '🧩 學習力', q: '學新指令時（如「坐下」），牠平均幾次能學會？', options: [
-                { text: '1-3 次', score: 4 },
-                { text: '4-7 次', score: 3 },
-                { text: '8 次以上', score: 1 }
-            ]},
-            { category: '🧩 學習力', q: '若你換成不同語氣說指令（如輕聲 vs 嚴肅），牠能理解嗎？', options: [
-                { text: '會照做', score: 4 },
-                { text: '有時會混亂', score: 3 },
-                { text: '聽不懂', score: 1 }
-            ]},
-            { category: '🧩 學習力', q: '當你教牠新花樣（如轉圈），牠的態度？', options: [
-                { text: '很快掌握並樂在其中', score: 4 },
-                { text: '有點猶豫但會嘗試', score: 3 },
-                { text: '馬上轉身走開', score: 1 }
-            ]},
-            { category: '🧩 學習力', q: '若你說「不是這個」，牠會停止動作嗎？', options: [
-                { text: '馬上停下', score: 4 },
-                { text: '過幾秒才反應', score: 3 },
-                { text: '聽不懂', score: 1 }
-            ]},
-            { category: '🧩 學習力', q: '當你換了新的玩具名稱（如「球球」→「咬咬」），牠能記得嗎？', options: [
-                { text: '很快就記起新名字', score: 4 },
-                { text: '要練幾次', score: 3 },
-                { text: '完全混亂', score: 1 }
-            ]},
-            { category: '🐾 觀察力與記憶力', q: '當你假裝丟球但其實沒丟時，狗狗的反應是？', options: [
-                { text: '馬上看出你在騙牠', score: 4 },
-                { text: '看了一下地板後才發現', score: 3 },
-                { text: '一直找球到處跑', score: 1 }
-            ]},
-            { category: '🐾 觀察力與記憶力', q: '你把零食藏在兩個杯子其中之一，狗狗能記得在哪個杯子裡嗎？', options: [
-                { text: '總是記得', score: 4 },
-                { text: '有時記得、有時忘', score: 3 },
-                { text: '完全忘記', score: 1 }
-            ]},
-            { category: '🐾 觀察力與記憶力', q: '當你換了新穿的衣服或香水，狗狗是否認出你？', options: [
-                { text: '馬上知道是你', score: 4 },
-                { text: '先猶豫再靠近', score: 3 },
-                { text: '以為是陌生人', score: 1 }
-            ]},
-            { category: '🐾 觀察力與記憶力', q: '當你移動牠常睡的毯子到別的地方，牠會？', options: [
-                { text: '立刻找到並躺上去', score: 4 },
-                { text: '稍微聞一聞才躺下', score: 3 },
-                { text: '完全沒注意', score: 1 }
-            ]},
-            { category: '🐾 觀察力與記憶力', q: '當你故意走去門口拿牽繩，狗狗反應是？', options: [
-                { text: '立刻興奮跳起來', score: 4 },
-                { text: '看你幾秒才起來', score: 3 },
-                { text: '完全沒反應', score: 1 }
-            ]},
-            { category: '🐕 空間與感知能力', q: '當你藏零食在布下面，牠會？', options: [
-                { text: '馬上掀起布', score: 4 },
-                { text: '聞一聞才動作', score: 3 },
-                { text: '放棄', score: 1 }
-            ]},
-            { category: '🐕 空間與感知能力', q: '當你搬動家具後，牠會撞到嗎？', options: [
-                { text: '立刻適應', score: 4 },
-                { text: '偶爾撞一下', score: 3 },
-                { text: '常常卡住', score: 1 }
-            ]},
-            { category: '🐕 空間與感知能力', q: '當牠看到鏡子裡的自己，牠會？', options: [
-                { text: '觀察一下後不在意', score: 4 },
-                { text: '吠叫幾下', score: 3 },
-                { text: '對鏡子生氣', score: 1 }
-            ]},
-            { category: '🐕 空間與感知能力', q: '當你在另一個房間叫牠名字，牠能找到你嗎？', options: [
-                { text: '馬上找到', score: 4 },
-                { text: '聽一下方向才來', score: 3 },
-                { text: '到處亂找', score: 1 }
-            ]},
-            { category: '🐕 空間與感知能力', q: '當你換了家裡的家具擺設，牠會？', options: [
-                { text: '很快習慣新位置', score: 4 },
-                { text: '需要幾天', score: 3 },
-                { text: '明顯不適應', score: 1 }
-            ]}
-        ];
+        var currentLang = 'zh';
+        
+        var translations = {
+            zh: {
+                title: '🧠 狗狗智力測驗',
+                subtitle: '12 道題目，揭開你家毛孩的天才指數！',
+                nameLabel: '請輸入你家狗狗的名字：',
+                namePlaceholder: '例如：Chewy、初一',
+                startBtn: '開始測驗 🐾',
+                prevBtn: '上一題',
+                nextBtn: '下一題',
+                photoTitle: '📸 上傳狗狗照片',
+                photoSubtitle: '讓證書更有紀念價值！',
+                takePhotoBtn: '📷 拍照',
+                choosePhotoBtn: '🖼️ 從相簿選擇',
+                viewResultBtn: '查看結果 ✨',
+                skipBtn: '跳過',
+                downloadBtn: '下載智力證明 📜',
+                restartBtn: '重新測驗 🔄',
+                disclaimer: '* 本測驗僅供娛樂參考，不代表真實的狗狗智商評估',
+                scoreText: ' 的智商得分：',
+                pointsText: ' 分',
+                certTitle: '狗狗智力測驗證明書',
+                certExcellence: '在狗狗智力測驗中表現優異',
+                certScore: '智商得分：',
+                certOrg: '認證機構：@3xs_travel_chewy',
+                certDate: '頒發日期：',
+                progressText: '第 {current} 題，共 12 題'
+            },
+            en: {
+                title: '🧠 Dog IQ Test',
+                subtitle: '12 questions to reveal your dog\'s genius level!',
+                nameLabel: 'Enter your dog\'s name:',
+                namePlaceholder: 'e.g., Chewy, Max',
+                startBtn: 'Start Test 🐾',
+                prevBtn: 'Previous',
+                nextBtn: 'Next',
+                photoTitle: '📸 Upload Dog Photo',
+                photoSubtitle: 'Make your certificate more memorable!',
+                takePhotoBtn: '📷 Take Photo',
+                choosePhotoBtn: '🖼️ Choose from Gallery',
+                viewResultBtn: 'View Results ✨',
+                skipBtn: 'Skip',
+                downloadBtn: 'Download Certificate 📜',
+                restartBtn: 'Restart Test 🔄',
+                disclaimer: '* This test is for entertainment purposes only and does not represent actual dog intelligence assessment',
+                scoreText: '\'s IQ Score: ',
+                pointsText: ' points',
+                certTitle: 'Dog Intelligence Test Certificate',
+                certExcellence: 'Demonstrated Excellence in Dog Intelligence Testing',
+                certScore: 'IQ Score: ',
+                certOrg: 'Certified by: @3xs_travel_chewy',
+                certDate: 'Date Issued: ',
+                progressText: 'Question {current} of 12'
+            },
+            nl: {
+                title: '🧠 Honden IQ Test',
+                subtitle: '12 vragen om het genieniveau van je hond te onthullen!',
+                nameLabel: 'Voer de naam van je hond in:',
+                namePlaceholder: 'bijv., Chewy, Max',
+                startBtn: 'Start Test 🐾',
+                prevBtn: 'Vorige',
+                nextBtn: 'Volgende',
+                photoTitle: '📸 Upload Hondenfoto',
+                photoSubtitle: 'Maak je certificaat gedenkwaardiger!',
+                takePhotoBtn: '📷 Foto Maken',
+                choosePhotoBtn: '🖼️ Kies uit Galerij',
+                viewResultBtn: 'Bekijk Resultaten ✨',
+                skipBtn: 'Overslaan',
+                downloadBtn: 'Download Certificaat 📜',
+                restartBtn: 'Test Opnieuw 🔄',
+                disclaimer: '* Deze test is alleen voor entertainment en vertegenwoordigt geen daadwerkelijke intelligentiebeoordeling van honden',
+                scoreText: '\'s IQ-score: ',
+                pointsText: ' punten',
+                certTitle: 'Honden Intelligentie Test Certificaat',
+                certExcellence: 'Toonde uitstekende prestaties in honden intelligentie testen',
+                certScore: 'IQ-score: ',
+                certOrg: 'Gecertificeerd door: @3xs_travel_chewy',
+                certDate: 'Uitgiftedatum: ',
+                progressText: 'Vraag {current} van 12'
+            }
+        };
 
-        var levels = [
-            { min: 30, icon: '🌼', title: '小可愛探索家', desc: '對世界充滿好奇但行動派不強，常用「萌樣」解決問題。可能還需要一點時間理解指令，但牠的耐心與親和力絕對滿分。', msgs: ['用無辜大眼證明：可愛就是最強武器！💕', '的人生哲學：為什麼要努力？躺著等摸摸不好嗎？😌'] },
-            { min: 60, icon: '🐕', title: '開朗學習生', desc: '觀察力與反應力不錯，偶爾會分心，但只要願意學就進步很快。懂得用眼神讀空氣，是人類情緒的好感應器。', msgs: ['正在用心感受你的每個情緒變化 💙', '學習速度快，就是偶爾會被零食分心而已 😋'] },
-            { min: 80, icon: '🧠', title: '機靈夥伴型', desc: '思考靈活、能舉一反三，懂得觀察情境並做出對應行動。學新指令速度快，也知道什麼時候該「裝傻」討摸摸。', msgs: ['的測驗結果是 💡 機靈夥伴型！已經學會什麼時候該裝傻了 😏', '在思考怎麼用最少力氣獲得最多零食 🧠✨'] },
-            { min: 90, icon: '🚀', title: '聰明高材生', desc: '不只會學，還會觀察你、測試你。能自己找解法、理解因果，是小小問題解決高手。可能會「太聰明」到讓飼主啞口無言。', msgs: ['已經開始觀察你的行為模式了 🔍', '可能正在測試你的底線在哪裡 🤓'] },
-            { min: 110, icon: '🌟', title: '狗界天才王', desc: '超高理解力與學習速度，懂得觀察人類表情、預測行動。能自己設計遊戲或策略，是真正能「跟人溝通」的狗狗天才！', msgs: ['的智商可能比主人還高…該擔心嗎？👑🤔', '，傳說中的 🌟 狗界天才王！可能已經在策劃統治世界了 🌍'] }
-        ];
+        var questions = {
+            zh: [
+                { category: '🐾 生活應對', q: '當你正在幫你的小狗準備正餐時，小狗有沒有理解並且做出反應呢？', options: [
+                    { text: '直接衝到廚房等待', score: 10 },
+                    { text: '有感應到有事情要發生了', score: 6 },
+                    { text: '沒有反應', score: 3 }
+                ]},
+                { category: '🐾 生活應對', q: '當你收拾背包準備出門旅行，牠會？', options: [
+                    { text: '早早察覺，開始跟著你', score: 10 },
+                    { text: '到最後才發現', score: 6 },
+                    { text: '完全不知道', score: 3 }
+                ]},
+                { category: '🐾 生活應對', q: '當牠聽到你說「要去散步嗎？」時？', options: [
+                    { text: '秒衝到門邊', score: 10 },
+                    { text: '先觀察你是不是認真的', score: 6 },
+                    { text: '沒特別反應', score: 3 }
+                ]},
+                { category: '🦴 問題解決', q: '當牠的玩具卡在沙發下時？', options: [
+                    { text: '用爪子或鼻子撥出來', score: 10 },
+                    { text: '對著沙發叫', score: 6 },
+                    { text: '轉頭去玩別的', score: 3 }
+                ]},
+                { category: '🦴 問題解決', q: '小狗會不會在夏天運動後口渴時自動去喝水？', options: [
+                    { text: '會自己渴了就去喝', score: 10 },
+                    { text: '偶爾會自己來跟我要水', score: 6 },
+                    { text: '都要我拿水給他喝', score: 3 }
+                ]},
+                { category: '🐶 社交理解', q: '當你指著某個東西說「看那邊！」，牠會？', options: [
+                    { text: '跟著你指的方向看', score: 10 },
+                    { text: '看你的手指', score: 6 },
+                    { text: '完全不懂', score: 3 }
+                ]},
+                { category: '🧩 學習力', q: '學新指令時（如「坐下」），牠平均幾次能學會？', options: [
+                    { text: '1-3 次', score: 10 },
+                    { text: '4-7 次', score: 6 },
+                    { text: '8 次以上', score: 3 }
+                ]},
+                { category: '🧩 學習力', q: '當你換了新的玩具名稱（如「球球」→「咬咬」），牠能記得嗎？', options: [
+                    { text: '很快就記起新名字', score: 10 },
+                    { text: '要練幾次', score: 6 },
+                    { text: '完全混亂', score: 3 }
+                ]},
+                { category: '🐾 觀察記憶', q: '當你假裝丟球但其實沒丟時，狗狗的反應是？', options: [
+                    { text: '馬上看出你在騙牠', score: 10 },
+                    { text: '看了一下地板後才發現', score: 6 },
+                    { text: '一直找球到處跑', score: 3 }
+                ]},
+                { category: '🐾 觀察記憶', q: '當你移動牠常睡的毯子到別的地方，牠會？', options: [
+                    { text: '立刻找到並躺上去', score: 10 },
+                    { text: '稍微聞一聞才躺下', score: 6 },
+                    { text: '完全沒注意', score: 3 }
+                ]},
+                { category: '🐾 觀察記憶', q: '當你故意走去門口拿牽繩，狗狗反應是？', options: [
+                    { text: '立刻興奮跳起來', score: 10 },
+                    { text: '看你幾秒才起來', score: 6 },
+                    { text: '完全沒反應', score: 3 }
+                ]},
+                { category: '🐕 空間感知', q: '當牠看到鏡子裡的自己，牠會？', options: [
+                    { text: '觀察一下後不在意', score: 10 },
+                    { text: '吠叫幾下', score: 6 },
+                    { text: '對鏡子生氣', score: 3 }
+                ]}
+            ],
+            en: [
+                { category: '🐾 Daily Adaptation', q: 'When you prepare your dog\'s meal, does your dog understand and respond?', options: [
+                    { text: 'Rushes to the kitchen and waits', score: 10 },
+                    { text: 'Senses something is happening', score: 6 },
+                    { text: 'No reaction', score: 3 }
+                ]},
+                { category: '🐾 Daily Adaptation', q: 'When you pack your bags for a trip, does your dog:', options: [
+                    { text: 'Notice early and follow you', score: 10 },
+                    { text: 'Only realize at the last moment', score: 6 },
+                    { text: 'Completely unaware', score: 3 }
+                ]},
+                { category: '🐾 Daily Adaptation', q: 'When you say "Want to go for a walk?", your dog:', options: [
+                    { text: 'Rushes to the door immediately', score: 10 },
+                    { text: 'Observes if you\'re serious first', score: 6 },
+                    { text: 'No particular reaction', score: 3 }
+                ]},
+                { category: '🦴 Problem Solving', q: 'When your dog\'s toy gets stuck under the sofa:', options: [
+                    { text: 'Uses paws or nose to get it out', score: 10 },
+                    { text: 'Barks at the sofa', score: 6 },
+                    { text: 'Turns to play with something else', score: 3 }
+                ]},
+                { category: '🦴 Problem Solving', q: 'Does your dog automatically drink water when thirsty after exercise in summer?', options: [
+                    { text: 'Goes to drink on their own', score: 10 },
+                    { text: 'Sometimes asks me for water', score: 6 },
+                    { text: 'Always needs me to bring water', score: 3 }
+                ]},
+                { category: '🐶 Social Understanding', q: 'When you point at something and say "Look over there!", your dog:', options: [
+                    { text: 'Looks in the direction you point', score: 10 },
+                    { text: 'Looks at your finger', score: 6 },
+                    { text: 'Doesn\'t understand at all', score: 3 }
+                ]},
+                { category: '🧩 Learning Ability', q: 'When learning a new command (like "sit"), how many times on average before learning?', options: [
+                    { text: '1-3 times', score: 10 },
+                    { text: '4-7 times', score: 6 },
+                    { text: '8+ times', score: 3 }
+                ]},
+                { category: '🧩 Learning Ability', q: 'When you change a toy\'s name (like "ball" → "chew"), can your dog remember?', options: [
+                    { text: 'Quickly remembers the new name', score: 10 },
+                    { text: 'Needs several practices', score: 6 },
+                    { text: 'Completely confused', score: 3 }
+                ]},
+                { category: '🐾 Observation & Memory', q: 'When you pretend to throw a ball but don\'t actually throw it:', options: [
+                    { text: 'Immediately realizes you\'re tricking them', score: 10 },
+                    { text: 'Looks at the ground before realizing', score: 6 },
+                    { text: 'Keeps running around looking for the ball', score: 3 }
+                ]},
+                { category: '🐾 Observation & Memory', q: 'When you move their usual sleeping blanket to another place:', options: [
+                    { text: 'Immediately finds and lies on it', score: 10 },
+                    { text: 'Sniffs a bit before lying down', score: 6 },
+                    { text: 'Doesn\'t notice at all', score: 3 }
+                ]},
+                { category: '🐾 Observation & Memory', q: 'When you deliberately go to the door to get the leash:', options: [
+                    { text: 'Immediately gets excited and jumps up', score: 10 },
+                    { text: 'Watches you for a few seconds before getting up', score: 6 },
+                    { text: 'No reaction', score: 3 }
+                ]},
+                { category: '🐕 Spatial Awareness', q: 'When your dog sees themselves in the mirror:', options: [
+                    { text: 'Observes briefly then ignores it', score: 10 },
+                    { text: 'Barks a few times', score: 6 },
+                    { text: 'Gets angry at the mirror', score: 3 }
+                ]}
+            ],
+            nl: [
+                { category: '🐾 Dagelijkse Aanpassing', q: 'Als je de maaltijd van je hond voorbereidt, begrijpt en reageert je hond?', options: [
+                    { text: 'Rent naar de keuken en wacht', score: 10 },
+                    { text: 'Voelt dat er iets gebeurt', score: 6 },
+                    { text: 'Geen reactie', score: 3 }
+                ]},
+                { category: '🐾 Dagelijkse Aanpassing', q: 'Als je je tassen pakt voor een reis, doet je hond:', options: [
+                    { text: 'Merkt het vroeg op en volgt je', score: 10 },
+                    { text: 'Realiseert het pas op het laatste moment', score: 6 },
+                    { text: 'Volledig onbewust', score: 3 }
+                ]},
+                { category: '🐾 Dagelijkse Aanpassing', q: 'Als je zegt "Wil je gaan wandelen?", doet je hond:', options: [
+                    { text: 'Rent meteen naar de deur', score: 10 },
+                    { text: 'Observeert eerst of je het meent', score: 6 },
+                    { text: 'Geen bijzondere reactie', score: 3 }
+                ]},
+                { category: '🦴 Probleemoplossing', q: 'Als het speelgoed van je hond onder de bank zit:', options: [
+                    { text: 'Gebruikt poten of neus om het eruit te halen', score: 10 },
+                    { text: 'Blaft naar de bank', score: 6 },
+                    { text: 'Gaat met iets anders spelen', score: 3 }
+                ]},
+                { category: '🦴 Probleemoplossing', q: 'Drinkt je hond automatisch water als hij dorst heeft na inspanning in de zomer?', options: [
+                    { text: 'Gaat zelf drinken', score: 10 },
+                    { text: 'Vraagt me soms om water', score: 6 },
+                    { text: 'Moet altijd water krijgen', score: 3 }
+                ]},
+                { category: '🐶 Sociaal Begrip', q: 'Als je naar iets wijst en zegt "Kijk daar!", doet je hond:', options: [
+                    { text: 'Kijkt in de richting die je aanwijst', score: 10 },
+                    { text: 'Kijkt naar je vinger', score: 6 },
+                    { text: 'Begrijpt het helemaal niet', score: 3 }
+                ]},
+                { category: '🧩 Leervermogen', q: 'Bij het leren van een nieuw commando (zoals "zit"), hoeveel keer gemiddeld voordat het geleerd is?', options: [
+                    { text: '1-3 keer', score: 10 },
+                    { text: '4-7 keer', score: 6 },
+                    { text: '8+ keer', score: 3 }
+                ]},
+                { category: '🧩 Leervermogen', q: 'Als je de naam van een speeltje verandert (zoals "bal" → "knabbel"), kan je hond het onthouden?', options: [
+                    { text: 'Onthoudt snel de nieuwe naam', score: 10 },
+                    { text: 'Heeft enkele oefeningen nodig', score: 6 },
+                    { text: 'Volledig in de war', score: 3 }
+                ]},
+                { category: '🐾 Observatie & Geheugen', q: 'Als je doet alsof je een bal gooit maar eigenlijk niet gooit:', options: [
+                    { text: 'Realiseert meteen dat je ze voor de gek houdt', score: 10 },
+                    { text: 'Kijkt naar de grond voordat ze het doorhebben', score: 6 },
+                    { text: 'Blijft rondrennen op zoek naar de bal', score: 3 }
+                ]},
+                { category: '🐾 Observatie & Geheugen', q: 'Als je hun gebruikelijke slaapkleed naar een andere plek verplaatst:', options: [
+                    { text: 'Vindt het meteen en gaat erop liggen', score: 10 },
+                    { text: 'Snuffelt wat voordat ze gaan liggen', score: 6 },
+                    { text: 'Merkt het helemaal niet op', score: 3 }
+                ]},
+                { category: '🐾 Observatie & Geheugen', q: 'Als je opzettelijk naar de deur gaat om de riem te pakken:', options: [
+                    { text: 'Wordt meteen enthousiast en springt op', score: 10 },
+                    { text: 'Kijkt je een paar seconden aan voordat ze opstaan', score: 6 },
+                    { text: 'Geen reactie', score: 3 }
+                ]},
+                { category: '🐕 Ruimtelijk Bewustzijn', q: 'Als je hond zichzelf in de spiegel ziet:', options: [
+                    { text: 'Observeert kort en negeert het dan', score: 10 },
+                    { text: 'Blaft een paar keer', score: 6 },
+                    { text: 'Wordt boos op de spiegel', score: 3 }
+                ]}
+            ]
+        };
+
+        var levels = {
+            zh: [
+                { min: 36, icon: '🌼', title: '小可愛探索家', desc: '對世界充滿好奇但行動派不強，常用「萌樣」解決問題。可能還需要一點時間理解指令，但牠的耐心與親和力絕對滿分。', msgs: ['用無辜大眼證明：可愛就是最強武器！💕', '的人生哲學：為什麼要努力？躺著等摸摸不好嗎？😌'] },
+                { min: 72, icon: '🐕', title: '開朗學習生', desc: '觀察力與反應力不錯，偶爾會分心，但只要願意學就進步很快。懂得用眼神讀空氣，是人類情緒的好感應器。', msgs: ['正在用心感受你的每個情緒變化 💙', '學習速度快，就是偶爾會被零食分心而已 😋'] },
+                { min: 96, icon: '🧠', title: '機靈夥伴型', desc: '思考靈活、能舉一反三，懂得觀察情境並做出對應行動。學新指令速度快，也知道什麼時候該「裝傻」討摸摸。', msgs: ['的測驗結果是 💡 機靈夥伴型！已經學會什麼時候該裝傻了 😏', '在思考怎麼用最少力氣獲得最多零食 🧠✨'] },
+                { min: 108, icon: '🚀', title: '聰明高材生', desc: '不只會學，還會觀察你、測試你。能自己找解法、理解因果，是小小問題解決高手。可能會「太聰明」到讓飼主啞口無言。', msgs: ['已經開始觀察你的行為模式了 🔍', '可能正在測試你的底線在哪裡 🤓'] },
+                { min: 120, icon: '🌟', title: '狗界天才王', desc: '超高理解力與學習速度，懂得觀察人類表情、預測行動。能自己設計遊戲或策略，是真正能「跟人溝通」的狗狗天才！', msgs: ['的智商可能比主人還高…該擔心嗎？👑🤔', '，傳說中的 🌟 狗界天才王！可能已經在策劃統治世界了 🌍'] }
+            ],
+            en: [
+                { min: 36, icon: '🌼', title: 'Adorable Explorer', desc: 'Curious about the world but not the most action-oriented, often solving problems with cuteness. May need some time to understand commands, but their patience and affability are top-notch.', msgs: ['proves that cuteness is the ultimate weapon! 💕', '\'s life philosophy: Why work hard when you can lie down for pets? 😌'] },
+                { min: 72, icon: '🐕', title: 'Cheerful Learner', desc: 'Good observation and reaction skills, occasionally distracted, but progresses quickly when willing to learn. Can read the room with eye contact and is a great sensor of human emotions.', msgs: ['is carefully sensing your every emotional change 💙', ' learns fast, just occasionally distracted by treats 😋'] },
+                { min: 96, icon: '🧠', title: 'Smart Partner', desc: 'Flexible thinking, able to draw inferences, understands situations and responds accordingly. Learns new commands quickly and knows when to "play dumb" for pets.', msgs: ['\'s test result is 💡 Smart Partner! Already learned when to play dumb 😏', ' is thinking about how to get the most treats with minimal effort 🧠✨'] },
+                { min: 108, icon: '🚀', title: 'Brilliant Scholar', desc: 'Not only learns but observes and tests you. Can find solutions independently, understands cause and effect, a master problem solver. Might be "too smart" and leave you speechless.', msgs: [' has started observing your behavior patterns 🔍', ' might be testing where your boundaries are 🤓'] },
+                { min: 120, icon: '🌟', title: 'Canine Genius', desc: 'Exceptional comprehension and learning speed, observes human expressions and predicts actions. Can design games or strategies, truly a dog genius who can "communicate" with humans!', msgs: ['\'s IQ might be higher than their owner\'s... should we worry? 👑🤔', ', the legendary 🌟 Canine Genius! Might already be planning world domination 🌍'] }
+            ],
+            nl: [
+                { min: 36, icon: '🌼', title: 'Schattige Ontdekker', desc: 'Nieuwsgierig naar de wereld maar niet de meest actiegerichte, lost problemen vaak op met schattigheid. Heeft misschien wat tijd nodig om commando\'s te begrijpen, maar hun geduld en vriendelijkheid zijn topklasse.', msgs: [' bewijst dat schattigheid het ultieme wapen is! 💕', '\'s levensfilosofie: Waarom hard werken als je kunt liggen voor aaitjes? 😌'] },
+                { min: 72, icon: '🐕', title: 'Vrolijke Leerling', desc: 'Goede observatie- en reactievaardigheden, af en toe afgeleid, maar maakt snel vooruitgang wanneer bereid te leren. Kan de stemming lezen met oogcontact en is een geweldige sensor voor menselijke emoties.', msgs: [' voelt zorgvuldig elke emotionele verandering van je 💙', ' leert snel, alleen af en toe afgeleid door traktaties 😋'] },
+                { min: 96, icon: '🧠', title: 'Slimme Partner', desc: 'Flexibel denkvermogen, kan conclusies trekken, begrijpt situaties en reageert dienovereenkomstig. Leert snel nieuwe commando\'s en weet wanneer "dom te doen" voor aaitjes.', msgs: ['\'s testresultaat is 💡 Slimme Partner! Al geleerd wanneer dom te doen 😏', ' denkt na over hoe de meeste traktaties te krijgen met minimale inspanning 🧠✨'] },
+                { min: 108, icon: '🚀', title: 'Briljante Geleerde', desc: 'Niet alleen leert maar observeert en test je. Kan zelfstandig oplossingen vinden, begrijpt oorzaak en gevolg, een meester probleemoplosser. Kan "te slim" zijn en je sprakeloos achterlaten.', msgs: [' is begonnen je gedragspatronen te observeren 🔍', ' test misschien waar je grenzen liggen 🤓'] },
+                { min: 120, icon: '🌟', title: 'Honden Genie', desc: 'Uitzonderlijk begrip en leersnelheid, observeert menselijke uitdrukkingen en voorspelt acties. Kan spellen of strategieën ontwerpen, echt een hondengenie dat met mensen kan "communiceren"!', msgs: ['\'s IQ is misschien hoger dan die van hun eigenaar... moeten we ons zorgen maken? 👑🤔', ', het legendarische 🌟 Honden Genie! Plant misschien al wereldheerschappij 🌍'] }
+            ]
+        };
 
         var currentQuestion = 0;
         var answers = [];
@@ -563,16 +814,51 @@
         var dogPhotoData = null;
         var shuffledOptions = [];
 
-        function previewPhoto() {
-            var file = document.getElementById('dogPhoto').files[0];
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updateUIText();
+        }
+
+        function updateUIText() {
+            var t = translations[currentLang];
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('nameLabel').textContent = t.nameLabel;
+            document.getElementById('dogName').placeholder = t.namePlaceholder;
+            document.getElementById('startBtn').textContent = t.startBtn;
+            document.getElementById('prevBtn').textContent = t.prevBtn;
+            document.getElementById('nextBtn').textContent = t.nextBtn;
+            document.getElementById('photoTitle').textContent = t.photoTitle;
+            document.getElementById('photoSubtitle').textContent = t.photoSubtitle;
+            document.getElementById('takePhotoBtn').textContent = t.takePhotoBtn;
+            document.getElementById('choosePhotoBtn').textContent = t.choosePhotoBtn;
+            document.getElementById('viewResultBtn').textContent = t.viewResultBtn;
+            document.getElementById('skipBtn').textContent = t.skipBtn;
+            document.getElementById('downloadBtn').textContent = t.downloadBtn;
+            document.getElementById('restartBtn').textContent = t.restartBtn;
+            document.getElementById('disclaimer').textContent = t.disclaimer;
+        }
+
+        function previewPhoto(source) {
+            var file = source === 'camera' ? 
+                document.getElementById('dogPhotoCamera').files[0] : 
+                document.getElementById('dogPhotoGallery').files[0];
+            
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     dogPhotoData = e.target.result;
-                    document.getElementById('photoPreview').innerHTML = '<img src="' + e.target.result + '">';
+                    document.getElementById('photoPreviewStep').innerHTML = '<img src="' + e.target.result + '">';
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        function skipPhoto() {
+            dogPhotoData = null;
+            showResult();
         }
 
         function shuffleArray(array) {
@@ -589,7 +875,7 @@
         function startTest() {
             dogName = document.getElementById('dogName').value.trim();
             if (!dogName) {
-                alert('請輸入狗狗的名字！');
+                alert(currentLang === 'zh' ? '請輸入狗狗的名字！' : currentLang === 'en' ? 'Please enter your dog\'s name!' : 'Voer de naam van je hond in!');
                 return;
             }
             showScreen('quiz');
@@ -597,11 +883,12 @@
         }
 
         function loadQuestion() {
-            var q = questions[currentQuestion];
+            var q = questions[currentLang][currentQuestion];
+            var t = translations[currentLang];
             document.getElementById('categoryBadge').textContent = q.category;
             document.getElementById('questionText').textContent = q.q;
-            document.getElementById('progressText').textContent = '第 ' + (currentQuestion + 1) + ' 題，共 30 題';
-            document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
+            document.getElementById('progressText').textContent = t.progressText.replace('{current}', currentQuestion + 1);
+            document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 12 * 100) + '%';
 
             shuffledOptions[currentQuestion] = shuffledOptions[currentQuestion] || shuffleArray(q.options);
             var opts = shuffledOptions[currentQuestion];
@@ -647,11 +934,11 @@
         }
 
         function nextQuestion() {
-            if (currentQuestion < 29) {
+            if (currentQuestion < 11) {
                 currentQuestion++;
                 loadQuestion();
             } else {
-                showResult();
+                showScreen('photo');
             }
         }
 
@@ -669,16 +956,25 @@
                 totalScore += opts[answers[i]].score;
             }
             
-            for (var i = levels.length - 1; i >= 0; i--) {
-                if (totalScore >= levels[i].min) {
-                    currentLevel = levels[i];
+            var lvls = levels[currentLang];
+            for (var i = lvls.length - 1; i >= 0; i--) {
+                if (totalScore >= lvls[i].min) {
+                    currentLevel = lvls[i];
                     break;
                 }
             }
             
+            if (dogPhotoData) {
+                document.getElementById('resultDogPhoto').style.display = 'block';
+                document.getElementById('resultDogPhotoImg').src = dogPhotoData;
+            } else {
+                document.getElementById('resultDogPhoto').style.display = 'none';
+            }
+            
+            var t = translations[currentLang];
             document.getElementById('resultIcon').textContent = currentLevel.icon;
             document.getElementById('resultTitle').textContent = currentLevel.title;
-            document.getElementById('resultScore').textContent = dogName + ' 的智商得分：' + totalScore + ' 分';
+            document.getElementById('resultScore').textContent = dogName + t.scoreText + totalScore + t.pointsText;
             
             var randomMsg = currentLevel.msgs[Math.floor(Math.random() * currentLevel.msgs.length)];
             document.getElementById('resultMessage').textContent = dogName + ' ' + randomMsg;
@@ -691,30 +987,27 @@
             var canvas = document.getElementById('certificateCanvas');
             var ctx = canvas.getContext('2d');
             
-            // 清空畫布
-            ctx.clearRect(0, 0, 1200, 800);
+            ctx.clearRect(0, 0, 1200, 900);
             
-            // 背景
             ctx.fillStyle = '#faf8f5';
-            ctx.fillRect(0, 0, 1200, 800);
+            ctx.fillRect(0, 0, 1200, 900);
             
-            // 外框
             ctx.strokeStyle = '#ff8c42';
             ctx.lineWidth = 15;
-            ctx.strokeRect(30, 30, 1140, 740);
+            ctx.strokeRect(30, 30, 1140, 840);
             
-            // 內框
             ctx.strokeStyle = '#2c3e2c';
             ctx.lineWidth = 2;
-            ctx.strokeRect(50, 50, 1100, 700);
+            ctx.strokeRect(50, 50, 1100, 800);
             
-            // 標題
+            var certLang = currentLang === 'zh' ? 'zh' : 'en';
+            var t = translations[certLang];
+            
             ctx.fillStyle = '#2c3e2c';
             ctx.font = 'bold 50px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('狗狗智力測驗證明書', 600, 120);
+            ctx.fillText(t.certTitle, 600, 120);
             
-            // 如果有照片，繪製照片
             if (dogPhotoData) {
                 var img = new Image();
                 img.onload = function() {
@@ -737,138 +1030,105 @@
                         ctx.arc(600, 280, 100, 0, Math.PI * 2);
                         ctx.stroke();
                         
-                        drawCertificateText(ctx);
+                        drawCertificateText(ctx, certLang, t);
                     } catch (e) {
                         console.error('Error drawing photo:', e);
-                        drawCertificateText(ctx);
+                        drawCertificateText(ctx, certLang, t);
                     }
                 };
                 img.onerror = function() {
                     console.error('Failed to load image');
-                    drawCertificateText(ctx);
+                    drawCertificateText(ctx, certLang, t);
                 };
                 img.src = dogPhotoData;
             } else {
-                drawCertificateText(ctx);
+                drawCertificateText(ctx, certLang, t);
             }
         }
 
-        function drawCertificateText(ctx) {
-            // 狗狗名字
+        function drawCertificateText(ctx, certLang, t) {
             ctx.fillStyle = '#ff8c42';
-            ctx.font = 'bold 40px Arial';
+            ctx.font = 'bold 45px Arial';
             ctx.textAlign = 'center';
             ctx.fillText(dogName, 600, 430);
             
-            // 描述文字
             ctx.fillStyle = '#2c3e2c';
             ctx.font = '28px Arial';
-            ctx.fillText('在狗狗智力測驗中表現優異', 600, 480);
+            ctx.fillText(t.certExcellence, 600, 480);
             
-            // 等級標題
             ctx.fillStyle = '#ff8c42';
-            ctx.font = 'bold 36px Arial';
-            ctx.fillText(currentLevel.title, 600, 540);
+            ctx.font = 'bold 60px Arial';
+            ctx.fillText(t.certScore + totalScore + (certLang === 'zh' ? ' 分' : ' points'), 600, 560);
             
-            // 分數
+            var lvls = levels[certLang];
+            var certLevel = null;
+            for (var i = lvls.length - 1; i >= 0; i--) {
+                if (totalScore >= lvls[i].min) {
+                    certLevel = lvls[i];
+                    break;
+                }
+            }
+            
+            ctx.fillStyle = '#ff8c42';
+            ctx.font = 'bold 40px Arial';
+            ctx.fillText(certLevel.icon + ' ' + certLevel.title, 600, 630);
+            
             ctx.fillStyle = '#2c3e2c';
-            ctx.font = '30px Arial';
-            ctx.fillText('智商得分：' + totalScore + ' 分', 600, 590);
+            ctx.font = '24px Arial';
+            var descLines = wrapText(ctx, certLevel.desc, 900);
+            var yPos = 680;
+            for (var i = 0; i < descLines.length; i++) {
+                ctx.fillText(descLines[i], 600, yPos);
+                yPos += 30;
+            }
             
-            // 日期
+            ctx.fillStyle = '#5a6b5a';
+            ctx.font = '22px Arial';
+            ctx.fillText(t.certOrg, 600, yPos + 30);
+            
             var today = new Date();
             var year = today.getFullYear();
             var month = today.getMonth() + 1;
             var day = today.getDate();
-            var dateStr = year + '年' + month + '月' + day + '日';
-            ctx.fillStyle = '#5a6b5a';
-            ctx.font = '22px Arial';
-            ctx.fillText('頒發日期：' + dateStr, 600, 650);
+            var dateStr = certLang === 'zh' ? 
+                (year + '年' + month + '月' + day + '日') : 
+                (month + '/' + day + '/' + year);
+            ctx.fillText(t.certDate + dateStr, 600, yPos + 60);
             
-            // 繪製 logo
-            drawDogLogo(ctx, 1050, 720);
-            
-            // 下載
             setTimeout(function() {
                 try {
                     var canvas = document.getElementById('certificateCanvas');
                     var dataURL = canvas.toDataURL('image/png');
                     var link = document.createElement('a');
-                    link.download = dogName + '_智力測驗證明.png';
+                    link.download = dogName + '_Certificate.png';
                     link.href = dataURL;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
                 } catch (e) {
-                    alert('下載失敗，請稍後再試');
+                    alert('Download failed');
                     console.error('Download error:', e);
                 }
             }, 200);
         }
 
-        function drawDogLogo(ctx, x, y) {
-            var scale = 0.35;
-            var offsetY = -40;
+        function wrapText(ctx, text, maxWidth) {
+            var words = text.split('');
+            var lines = [];
+            var currentLine = '';
             
-            // 左眼圓圈
-            ctx.fillStyle = '#ff8c42';
-            ctx.beginPath();
-            ctx.arc(x - 50 * scale, y + offsetY, 40 * scale, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 6 * scale;
-            ctx.stroke();
-            
-            // 右眼圓圈
-            ctx.fillStyle = '#ff8c42';
-            ctx.beginPath();
-            ctx.arc(x + 50 * scale, y + offsetY, 40 * scale, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 6 * scale;
-            ctx.stroke();
-            
-            // 左眼星號
-            ctx.fillStyle = '#000';
-            ctx.font = 'bold ' + Math.floor(35 * scale) + 'px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('✱', x - 50 * scale, y + offsetY);
-            
-            // 右眼星號
-            ctx.fillText('✱', x + 50 * scale, y + offsetY);
-            
-            // 鼻子
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.ellipse(x, y + offsetY + 45 * scale, 10 * scale, 12 * scale, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // 左邊嘴巴曲線
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 6 * scale;
-            ctx.lineCap = 'round';
-            ctx.beginPath();
-            ctx.moveTo(x - 35 * scale, y + offsetY + 55 * scale);
-            ctx.quadraticCurveTo(x - 25 * scale, y + offsetY + 68 * scale, x - 12 * scale, y + offsetY + 63 * scale);
-            ctx.stroke();
-            
-            // 右邊嘴巴曲線
-            ctx.beginPath();
-            ctx.moveTo(x + 35 * scale, y + offsetY + 55 * scale);
-            ctx.quadraticCurveTo(x + 25 * scale, y + offsetY + 68 * scale, x + 12 * scale, y + offsetY + 63 * scale);
-            ctx.stroke();
-        }
-
-        function shareResult() {
-            var text = dogName + ' 的智商測驗結果：\n' + currentLevel.icon + ' ' + currentLevel.title + '（' + totalScore + ' 分）\n\n立即測試你的狗狗';
-            
-            if (navigator.share) {
-                navigator.share({ text: text });
-            } else {
-                navigator.clipboard.writeText(text);
-                alert('結果已複製到剪貼簿！');
+            for (var i = 0; i < words.length; i++) {
+                var testLine = currentLine + words[i];
+                var metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && currentLine !== '') {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                } else {
+                    currentLine = testLine;
+                }
             }
+            lines.push(currentLine);
+            return lines;
         }
 
         function restartTest() {
@@ -878,8 +1138,9 @@
             dogName = '';
             dogPhotoData = null;
             document.getElementById('dogName').value = '';
-            document.getElementById('photoPreview').innerHTML = '📷 點擊上傳照片';
-            document.getElementById('dogPhoto').value = '';
+            document.getElementById('photoPreviewStep').innerHTML = '📷';
+            document.getElementById('dogPhotoCamera').value = '';
+            document.getElementById('dogPhotoGallery').value = '';
             showScreen('welcome');
         }
 
